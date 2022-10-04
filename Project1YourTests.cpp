@@ -2,12 +2,7 @@
 #include <cassert>
 #include "Project1.h"
 
-using std::cin;
-using std::cout;
-using std::endl;
-using std::istringstream;
-
-
+using namespace std;
 
 void yourTests() 
 {
