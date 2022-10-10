@@ -66,13 +66,16 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 	outputText = "";
 	//current word
 	string currentWord = "";
-	string textLetter;
+	string textLetter = "";
 	//array of unique words
 	vector <string> unique[ARRAY_SIZE]; //Changed this to a vector string so it can be an array than just a string
 	int skip = 0;
-	
-
-	
+	int j = 0;
+	int k = 0;
+	char inputChar = ' '; //This helps to find the letter
+	char charNext = ' ';
+	char next = ' ';
+	char text = ' '; //to create the lower ascii only
 	
 	for (int i = 0; i < inputText.size(); i++)
 	{
@@ -84,18 +87,14 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 		}
 
 		// This skips a certain length of characters to the next letter or separator
-		int j = i + 1;
-		int k = i + 2;
-		char inputChar = inputText[i]; //This helps to find the letter
-		char charNext = inputText[j];
-		char next = inputText[k];
-		char text = tolower(inputChar); //to create the lower ascii only
+		j = i + 1;
+		k = i + 2;
+		inputChar = inputText[i]; //This helps to find the letter
+		charNext = inputText[j];
+		next = inputText[k];
+		text = tolower(inputChar); //to create the lower ascii only
 
-
-
-		if((inputChar >= 65 && inputChar <= 90) || (inputChar >= 97 && inputChar <= 122)) {//found a symbol
-		//Changed this because that the if would just be looking for the length of the specific string was given
-		//the if will look to see the letter ascii number is in range between one of the conditions
+		if((inputChar >= 65 && inputChar <= 90) || (inputChar >= 97 && inputChar <= 122)) {//found a letter
 			switch (text)
 			{
 				case 'a':
@@ -233,8 +232,6 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 					break;
 				}
 			
-			//put current word's letter into output
-			//Convert(text, outputText, currentWord, skip); //This caused an error that says it is out of the scope
 			//see if the currword is unique
 			/*
 			if(!Find(currentWord, unique)){//didn't find word
@@ -243,49 +240,31 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 				uniqueWord++;
 			}
 			
-			//add symbol to output
-			outputText += inputText[i];
 			*/
 		}
-
-		else{//found a letter
-			if (inputChar == 92) {
-				if (charNext ==110) {
-					skip = 1;
-					outputText += '\n';
-					/*
-					if(!Find(currentWord, unique)){//didn't find word
-						unique[uniqueWord] = currentWord;
-						currentWord = "";
-						uniqueWord++;
-					}
-				*/
-				}
+			//please keep these simple until the skeleton is all there
+			//also the skips in here were making us miss half the symbols
+		else{//found a symbol
+			if (inputChar == 10) {//10 is newline apparently
+				outputText += '\n';
 			}	
-			else if (inputChar == 45) {
-				if (charNext == 92 && next == 110) {
-					skip = 2;
-					outputText += '-\n';
-				}
-				else {
-					outputText += inputText[i];
-					/*
-					if(!Find(currentWord, unique)){//didn't find word
-						unique[uniqueWord] = currentWord;
-						currentWord = "";
-						uniqueWord++;
-					}
-				*/
-				}
+			else if (inputChar == 45) {//dash
+				outputText += '-';
 			}
-			else {
-				/*
-					if(!Find(currentWord, unique)){//didn't find word
-						unique[uniqueWord] = currentWord;
-						currentWord = "";
-						uniqueWord++;
-					}
-				*/
+			else if(inputChar==32){//space
+				outputText += ' ';
+			}
+			else if(inputChar==63){//question mark
+				outputText += '?';
+
+			}
+			else if(inputChar==33){//exclamation point
+				outputText += '!';
+
+			}
+			else if(inputChar==46){//period
+				outputText += '.';
+
 			}
 		}
 	}
@@ -301,6 +280,7 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 	return wordCount;
 	
 }
+
 /*
 bool Find(string currWord, string uniqueWords){//TODO: fix + test this function
 		
@@ -312,146 +292,5 @@ bool Find(string currWord, string uniqueWords){//TODO: fix + test this function
 	}
 
 	return false;//word not found
-}
-*/
-/*
-void Convert(char letter, string &output, string &current, int skip){//TODO: test this function
-	switch (letter)
-	{
-	case 'a':
-		output += 'a';
-		current += 'a';
-		skip += nameLength[1];
-		break;
-	case 'b':
-		output += 'b';
-		current += 'b';
-		skip += nameLength[1];
-		break;
-	case 'c':
-		output += 'c';
-		current += 'c';
-		skip += nameLength[3];
-		break;
-	case 'd':
-		output += 'd';
-		current += 'd';
-		skip += nameLength[1];
-		break;
-	case 'e':
-		output += 'e';
-		current += 'e';
-		skip += nameLength[0];
-		break;
-	case 'f':
-		output += 'f';
-		current += 'f';
-		skip += nameLength[3];
-		break;
-	case 'g':
-		output += 'g';
-		current += 'g';
-		skip += nameLength[0];
-		break;
-	case 'h':
-		output += 'h';
-		current += 'h';
-		skip += nameLength[1];
-		break;
-	case 'i':
-		output += 'i';
-		current += 'i';
-		skip += nameLength[1];
-		break;
-	case 'j':
-		output += 'j';
-		current += 'j';
-		skip += nameLength[3];
-		break;
-	case 'k':
-		output += 'k';
-		current += 'k';
-		skip += nameLength[0];
-		break;
-	case 'l':
-		output += 'l';
-		current += 'l';
-		skip += nameLength[0];
-		break;
-	case 'm':
-		output += 'm';
-		current += 'm';
-		skip += nameLength[0];
-		break;
-	case 'n':
-		output += 'n';
-		current += 'n';
-		skip += nameLength[4];
-		break;
-	case 'o':
-		output += 'o';
-		current += 'o';
-		skip += nameLength[1];
-		break;
-	case 'p':
-		output += 'p';
-		current += 'p';
-		skip += nameLength[0];
-		break;
-	case 'q':
-		output += 'q';
-		current += 'q';
-		skip += nameLength[2];
-		break;
-	case 'r':
-		output += 'r';
-		current += 'r';
-		skip += nameLength[1];
-		break;
-	case 's':
-		output += 's';
-		current += 's';
-		skip += nameLength[2];
-		break;
-	case 't':
-		output += 't';
-		current += 't';
-		skip += nameLength[1];
-		break;
-	case 'u':
-		output += 'u';
-		current += 'u';
-		skip += nameLength[3];
-		break;
-	case 'v':
-		output += 'v';
-		current += 'v';
-		skip += nameLength[1];
-		break;
-	case 'w':
-		output += 'w';
-		current += 'w';
-		skip += nameLength[3];
-		break;
-	case 'x':
-		output += 'x';
-		current += 'x';
-		skip += nameLength[1];
-		break;
-	case 'y':
-		output += 'y';
-		current += 'y';
-		skip += nameLength[2];
-		break;
-	case 'z':
-		output += 'z';
-		current += 'z';
-		skip += nameLength[0];
-		break;
-	
-	default:
-		break;
-	}
-	
 }
 */

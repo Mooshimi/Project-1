@@ -1,7 +1,4 @@
-// Project1.cpp 
-//
-
-//
+// Project1.h
 
 #include <string>
 #include <iostream>  
@@ -12,8 +9,6 @@ using std::string;
 
 using std::string;
 
-unsigned int  funWithCallLetter(const string & inputText, string & outputText, int & uniqueWord );
+unsigned int funWithCallLetter(const string & inputText, string & outputText, int & uniqueWord );
 
 void yourTests();
-
- 
