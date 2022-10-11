@@ -67,8 +67,10 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 	//current word
 	string currentWord = "";
 	string textLetter = "";
+
 	//array of unique words
-	vector <string> unique[ARRAY_SIZE]; //Changed this to a vector string so it can be an array than just a string
+	vector <string> current (ARRAY_SIZE);
+	vector <string> unique(ARRAY_SIZE); //Changed this to a vector string so it can be an array than just a string
 	int skip = 0;
 	int j = 0;
 	int k = 0;
@@ -231,63 +233,92 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 				default:
 					break;
 				}
-			
-			//see if the currword is unique
-			/*
-			if(!Find(currentWord, unique)){//didn't find word
-				unique[uniqueWord] = currentWord;
-				currentWord = "";
-				uniqueWord++;
 			}
-			
-			*/
-		}
 			//please keep these simple until the skeleton is all there
 			//also the skips in here were making us miss half the symbols
 		else{//found a symbol
+			if (!currentWord.empty()) {
+				wordCount++;
+			}
+			else {
+				cout << "There is no word";
+			}
 			if (inputChar == 10) {//10 is newline apparently
 				outputText += '\n';
+				current.push_back(currentWord);
+				currentWord = "";
 			}	
 			else if (inputChar == 45) {//dash
 				outputText += '-';
+				current.push_back(currentWord);
+				currentWord = "";
 			}
 			else if(inputChar==32){//space
 				outputText += ' ';
+				current.push_back(currentWord);
+				currentWord = "";
 			}
 			else if(inputChar==63){//question mark
 				outputText += '?';
-
+				current.push_back(currentWord);
+				currentWord = "";
 			}
 			else if(inputChar==33){//exclamation point
 				outputText += '!';
-
+				current.push_back(currentWord);
+				currentWord = "";
 			}
 			else if(inputChar==46){//period
 				outputText += '.';
+				current.push_back(currentWord);
+				currentWord = "";
+			}
+		}
+	}
+	if (!currentWord.empty()) {
+		wordCount++;
+		current.push_back(currentWord);
+		currentWord = "";
+	}
 
+	for (int i = 100; i < (wordCount + 99); i++) {
+		int l = 100;
+		if (uniqueWord == 0) {
+			unique.push_back(current[i]);
+			uniqueWord++;
+			continue;
+		}
+		while (l <= (uniqueWord + 99)) {
+			if (current[i] == unique[l]) {
+				l++;
+				continue;
+			}
+			else {
+				unique.push_back(current[i]);
+				uniqueWord++;
+				l++;
+				break;
 			}
 		}
 	}
 
+	return wordCount;
 	/*
-	if(!Find(currentWord, unique)){//didn't find word
-		unique[uniqueWord] = currentWord;
-		currentWord = "";
-		uniqueWord++;
+	if(!Find(current, unique)){//didn't find word
 	}
-	*/
 	//return words count
 	return wordCount;
-	
+	*/
 }
 
 /*
-bool Find(string currWord, string uniqueWords){//TODO: fix + test this function
-		
-	for (int i = 0; i < uniqueWords.size(); i++)
+bool Find(vector <string>  & currWord, vector <string>  & uniqueWords){//TODO: fix + test this function
+	string word;	
+	for (int i = 0; i < currWord.size(); i++)
 	{
-		if(currWord == uniqueWords[i]){//found word
-			return true;
+		word = uniqueWords[i];
+		if(currWord == word[i]){//found word
+			continue;
 		}
 	}
 
