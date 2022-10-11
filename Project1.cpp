@@ -241,6 +241,12 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 				if (inputChar == 45 && charNext == 10) {
 					wordCount += 0;
 				}
+				else if (inputChar == 95 && charNext == 95){
+					wordCount += 0;
+				}
+				else if (inputChar == 43) {
+					wordCount += 0;
+				}
 				else {
 					wordCount++;
 				}
@@ -255,9 +261,11 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 			}	
 			else if (inputChar == 45) {//dash
 				outputText += '-';
+				/*
 				if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&((inputText[j] >= 65 && inputText[j] <= 90) || (inputText[j] >= 97 && inputText[j] <= 122)))
 					currentWord += "-";
-				else if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&(inputText[j]==10)){
+				*/
+				if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&(inputText[j]==10)){
 					outputText += "\n";
 					skip ++;//skip over the \n
 				}
@@ -282,6 +290,55 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 			}
 			else if(inputChar == 46){//period
 				outputText += '.';
+				current.push_back(currentWord);
+				currentWord = "";
+			}
+			else if (inputChar == 95) {
+				outputText += '_';
+				if (charNext == 95) {
+					outputText += '_';
+					skip++;
+				}
+				else {
+					current.push_back(currentWord);
+				}
+			}
+			else if (inputChar == 43) {
+				outputText += '+';
+			}
+			else if (inputChar >= 48 && inputChar <= 57) {
+				switch (inputChar) {
+					case '0':
+						outputText += '0';
+						break;
+					case '1':
+						outputText += '1';
+						break;
+					case '2':
+						outputText += '2';
+						break;
+					case '3':
+						outputText += '3';
+						break;
+					case '4':
+						outputText += '4';
+						break;
+					case '5':
+						outputText += '5';
+						break;
+					case '6':
+						outputText += '6';
+						break;
+					case '7':
+						outputText += '7';
+						break;
+					case '8':
+						outputText += '8';
+						break;
+					case '9':
+						outputText += '9';
+						break;
+				}
 				current.push_back(currentWord);
 				currentWord = "";
 			}

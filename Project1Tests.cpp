@@ -8,7 +8,7 @@ void genericTests()
 {
 	string output;
 	int    uniqueWord;
-/*
+
 	//for an empty string
 	assert(funWithCallLetter( "", output, uniqueWord ) == 0);
 	cout << "test #1 completed" << endl;
@@ -65,13 +65,14 @@ void genericTests()
 	assert( output.compare("ab-de") == 0 );
 	assert( uniqueWord == 2 );
 	cout << "test #10 completed" << endl;
-*/
+
 	//hyphen character followed by a single newline
 	//will considered the 2 parts word as a single word
 	assert( funWithCallLetter( "ALPHAbravo-\ndeltaecho", output, uniqueWord ) == 1);
 	assert( output.compare("ab-\nde") == 0 );
 	assert( uniqueWord == 1 );
 	cout << "test #11 completed" << endl;
+	
 }
 
 int main()
