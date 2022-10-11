@@ -32,7 +32,7 @@ using std::string;
 	uniqueWord: count how many unique word was in the input text. 
 	            The same word, with different case, count for one word(not case sensitive)
 
-	Project1.cpp : you must implement the fcuntion funWithCallLetter, you cannot change its signature
+	Project1.cpp : you must implement the function funWithCallLetter, you cannot change its signature
 
 	Project1.h    : the declaration of funWithCallLetter
 
@@ -53,7 +53,7 @@ using std::string;
 
 	Submission    : one submission per team
 */
-const int ARRAY_SIZE = 100;
+const int ARRAY_SIZE = 1;
 const vector <int> nameLength = {3, 4, 5, 6, 7}; //this will help the skip variable once a letter is concentrated and skip certain length of characters to the next letter or separator
 
 unsigned int funWithCallLetter(const string & inputText, string & outputText, int & uniqueWord ) 
@@ -68,9 +68,11 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 	string currentWord = "";
 	string textLetter = "";
 
+	vector <string> current(ARRAY_SIZE);
 	//array of unique words
-	vector <string> current (ARRAY_SIZE);
 	vector <string> unique(ARRAY_SIZE); //Changed this to a vector string so it can be an array than just a string
+
+	//# of next spaces to skip
 	int skip = 0;
 	int j = 0;
 	int k = 0;
@@ -79,24 +81,23 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 	char next = ' ';
 	char text = ' '; //to create the lower ascii only
 	
-	for (int i = 0; i < inputText.size(); i++)
+	for (int i = 0; i < inputText.size(); i++)//input string loop
 	{
-
-		if (skip > 0)
+		if (skip > 0)//skip # of spaces in skip var
 		{
 			skip--;
 			continue;
 		}
 
-		// This skips a certain length of characters to the next letter or separator
 		j = i + 1;
 		k = i + 2;
-		inputChar = inputText[i]; //This helps to find the letter
+		inputChar = inputText[i];
 		charNext = inputText[j];
 		next = inputText[k];
-		text = tolower(inputChar); //to create the lower ascii only
+		text = tolower(inputChar);
 
-		if((inputChar >= 65 && inputChar <= 90) || (inputChar >= 97 && inputChar <= 122)) {//found a letter
+		//found a letter	
+		if((inputChar >= 65 && inputChar <= 90) || (inputChar >= 97 && inputChar <= 122)) {
 			switch (text)
 			{
 				case 'a':
@@ -229,21 +230,19 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 					currentWord += 'z';
 					skip += nameLength[0];
 					break;
-				
 				default:
 					break;
 				}
 			}
-			//please keep these simple until the skeleton is all there
-			//also the skips in here were making us miss half the symbols
-		else{//found a symbol
+		//found a symbol
+		else{
 			if (!currentWord.empty()) {
 				wordCount++;
 			}
-			else {
-				cout << "There is no word";
-			}
-			if (inputChar == 10) {//10 is newline apparently
+			//else {
+			//	cout << "There is no word";
+			//}
+			if (inputChar == 10) {//newline
 				outputText += '\n';
 				current.push_back(currentWord);
 				currentWord = "";
@@ -251,77 +250,57 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 			else if (inputChar == 45) {//dash
 				outputText += '-';
 				current.push_back(currentWord);
-				currentWord = "";
+				if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&((inputText[j] >= 65 && inputText[j] <= 90) || (inputText[j] >= 97 && inputText[j] <= 122)))
+					currentWord += "-";
+				else if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&(inputText[j]==10)){
+					currentWord += "";
+					skip++;//skip over the \n
+				}
 			}
-			else if(inputChar==32){//space
+			else if(inputChar == 32){//space
 				outputText += ' ';
 				current.push_back(currentWord);
 				currentWord = "";
 			}
-			else if(inputChar==63){//question mark
+			else if(inputChar == 63){//question mark
 				outputText += '?';
 				current.push_back(currentWord);
 				currentWord = "";
 			}
-			else if(inputChar==33){//exclamation point
+			else if(inputChar == 33){//exclamation point
 				outputText += '!';
 				current.push_back(currentWord);
 				currentWord = "";
 			}
-			else if(inputChar==46){//period
+			else if(inputChar == 46){//period
 				outputText += '.';
 				current.push_back(currentWord);
 				currentWord = "";
 			}
-		}
-	}
+		}//end text detection else
+	}//end for loop
 	if (!currentWord.empty()) {
 		wordCount++;
 		current.push_back(currentWord);
 		currentWord = "";
 	}
 
-	for (int i = 100; i < (wordCount + 99); i++) {
-		int l = 100;
+	for (int i = ARRAY_SIZE; i < wordCount + ARRAY_SIZE; i++) {
 		if (uniqueWord == 0) {
 			unique.push_back(current[i]);
 			uniqueWord++;
-			continue;
 		}
-		while (l <= (uniqueWord + 99)) {
+		for(int l = ARRAY_SIZE; l < wordCount + ARRAY_SIZE; l++) {
 			if (current[i] == unique[l]) {
-				l++;
-				continue;
+				break;
 			}
 			else {
 				unique.push_back(current[i]);
 				uniqueWord++;
-				l++;
 				break;
 			}
 		}
 	}
 
 	return wordCount;
-	/*
-	if(!Find(current, unique)){//didn't find word
-	}
-	//return words count
-	return wordCount;
-	*/
 }
-
-/*
-bool Find(vector <string>  & currWord, vector <string>  & uniqueWords){//TODO: fix + test this function
-	string word;	
-	for (int i = 0; i < currWord.size(); i++)
-	{
-		word = uniqueWords[i];
-		if(currWord == word[i]){//found word
-			continue;
-		}
-	}
-
-	return false;//word not found
-}
-*/
