@@ -32,7 +32,7 @@ using std::string;
 	uniqueWord: count how many unique word was in the input text. 
 	            The same word, with different case, count for one word(not case sensitive)
 
-	Project1.cpp : you must implement the function funWithCallLetter, you cannot change its signature
+	Project1.cpp : you must implement the fcuntion funWithCallLetter, you cannot change its signature
 
 	Project1.h    : the declaration of funWithCallLetter
 
@@ -89,6 +89,7 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 			continue;
 		}
 
+		// This skips a certain length of characters to the next letter or separator
 		j = i + 1;
 		k = i + 2;
 		inputChar = inputText[i];
@@ -229,15 +230,20 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 					outputText += 'z';
 					currentWord += 'z';
 					skip += nameLength[0];
-					break;
+					break;			
 				default:
 					break;
 				}
 			}
-		//found a symbol
+		//found a symbol	
 		else{
 			if (!currentWord.empty()) {
-				wordCount++;
+				if (inputChar == 45 && charNext == 10) {
+					wordCount += 0;
+				}
+				else {
+					wordCount++;
+				}
 			}
 			//else {
 			//	cout << "There is no word";
@@ -249,12 +255,14 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 			}	
 			else if (inputChar == 45) {//dash
 				outputText += '-';
-				current.push_back(currentWord);
 				if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&((inputText[j] >= 65 && inputText[j] <= 90) || (inputText[j] >= 97 && inputText[j] <= 122)))
 					currentWord += "-";
 				else if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&(inputText[j]==10)){
-					currentWord += "";
-					skip++;//skip over the \n
+					outputText += "\n";
+					skip ++;//skip over the \n
+				}
+				else {
+					current.push_back(currentWord);
 				}
 			}
 			else if(inputChar == 32){//space
