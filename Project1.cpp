@@ -58,7 +58,7 @@ const vector <int> nameLength = {3, 4, 5, 6, 7};
  */
 unsigned int funWithCallLetter(const string & inputText, string & outputText, int & uniqueWord ) 
 {
-	uniqueWord = 0;	
+	uniqueWord = 0;
 	outputText = "";
 
 	int wordCount = 0;			//# of words in a string
@@ -67,7 +67,7 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 	vector <string> current(ARRAY_SIZE);//array of all words
 	vector <string> unique(ARRAY_SIZE);//array of unique words
 
-	int 	skip 	= 0;//# of next spaces to skip
+int 	skip 	= 0;//# of next spaces to skip
 	int 	j 		= 0;
 	char 	inputChar = ' '; //This helps to find the letter
 	char 	charNext = ' ';
@@ -231,14 +231,6 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 				if ((inputChar == 45 && charNext == 10) || (inputChar == 95 && charNext == 95) || inputChar == 43){
 					wordCount += 0;
 				}
-				/*
-				else if (inputChar == 95 && charNext == 95){
-					wordCount += 0;
-				}
-				else if (inputChar == 43) {
-					wordCount += 0;
-				}
-				*/
 				else {
 					wordCount++;
 				}
