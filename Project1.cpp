@@ -238,22 +238,21 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 		//found a symbol	
 		else{
 			if (!currentWord.empty()) {
-				if (inputChar == 45 && charNext == 10) {
+				if ((inputChar == 45 && charNext == 10) || (inputChar == 95 && charNext == 95) || inputChar == 43){
 					wordCount += 0;
 				}
+				/*
 				else if (inputChar == 95 && charNext == 95){
 					wordCount += 0;
 				}
 				else if (inputChar == 43) {
 					wordCount += 0;
 				}
+				*/
 				else {
 					wordCount++;
 				}
 			}
-			//else {
-			//	cout << "There is no word";
-			//}
 			if (inputChar == 10) {//newline
 				outputText += '\n';
 				current.push_back(currentWord);
@@ -261,10 +260,6 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 			}	
 			else if (inputChar == 45) {//dash
 				outputText += '-';
-				/*
-				if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&((inputText[j] >= 65 && inputText[j] <= 90) || (inputText[j] >= 97 && inputText[j] <= 122)))
-					currentWord += "-";
-				*/
 				if(((inputText[i-1] >= 65 && inputText[i-1] <= 90) || (inputText[i-1] >= 97 && inputText[i-1] <= 122))&&(inputText[j]==10)){
 					outputText += "\n";
 					skip ++;//skip over the \n
