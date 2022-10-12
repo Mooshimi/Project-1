@@ -16,23 +16,13 @@ using std::string;
    You must complete the function funWithCallLetter.
    funWithCallLetter returns the count of words in a string(s)
 
-   The words are written using NATO Phonetic Alphabet: https://www.worldometers.info/languages/nato-phonetic-alphabet/.
-   The words can be written with mixed cases.
-
    Word separator: 
 	   Words can be separated by space(s), punctuation(.?!), new line ('\n').
 	   If a word is finished by '-' and is followed by a new line, 
 	   the next word is part of the last word on the previous line 
 	   and count only as one(hyphenated).
 
-	inputText: the input text you must processed
-	outputText: the converted text to english. The word separator are transferred as-is 
-				from the inputText. The outputText is always in lowercase.
-
-	uniqueWord: count how many unique word was in the input text. 
-	            The same word, with different case, count for one word(not case sensitive)
-
-	Project1.cpp : you must implement the fcuntion funWithCallLetter, you cannot change its signature
+	Project1.cpp : you must implement the function funWithCallLetter, you cannot change its signature
 
 	Project1.h    : the declaration of funWithCallLetter
 
@@ -53,33 +43,35 @@ using std::string;
 
 	Submission    : one submission per team
 */
-const int ARRAY_SIZE = 1;
-const vector <int> nameLength = {3, 4, 5, 6, 7}; //this will help the skip variable once a letter is concentrated and skip certain length of characters to the next letter or separator
 
+const int ARRAY_SIZE = 1;
+//helps the skip variable once a letter is concentrated and skip certain length of characters to the next letter or separator
+const vector <int> nameLength = {3, 4, 5, 6, 7}; 
+
+/**
+ * @brief returns the count of words in a string
+ * 
+ * @param inputText input text you must process
+ * @param outputText all lowercase output text of compiled words from phonetic word alphabet
+ * @param uniqueWord # of unique words, not case sensitive
+ * @return the count of words in a string
+ */
 unsigned int funWithCallLetter(const string & inputText, string & outputText, int & uniqueWord ) 
 {
-	//# of words in a string
-	int wordCount = 0;
-	//# of unique words, not case sensitive
-	uniqueWord = 0;
-	//all lowercase output text of compiled words from phonetic word alphabet
+	uniqueWord = 0;	
 	outputText = "";
-	//current word
-	string currentWord = "";
-	string textLetter = "";
 
-	vector <string> current(ARRAY_SIZE);
-	//array of unique words
-	vector <string> unique(ARRAY_SIZE); //Changed this to a vector string so it can be an array than just a string
+	int wordCount = 0;			//# of words in a string
+	string currentWord = "";	//current word
 
-	//# of next spaces to skip
-	int skip = 0;
-	int j = 0;
-	int k = 0;
-	char inputChar = ' '; //This helps to find the letter
-	char charNext = ' ';
-	char next = ' ';
-	char text = ' '; //to create the lower ascii only
+	vector <string> current(ARRAY_SIZE);//array of all words
+	vector <string> unique(ARRAY_SIZE);//array of unique words
+
+	int 	skip 	= 0;//# of next spaces to skip
+	int 	j 		= 0;
+	char 	inputChar = ' '; //This helps to find the letter
+	char 	charNext = ' ';
+	char 	text 	= ' '; //to create the lower ascii only
 	
 	for (int i = 0; i < inputText.size(); i++)//input string loop
 	{
@@ -91,10 +83,8 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 
 		// This skips a certain length of characters to the next letter or separator
 		j = i + 1;
-		k = i + 2;
 		inputChar = inputText[i];
 		charNext = inputText[j];
-		next = inputText[k];
 		text = tolower(inputChar);
 
 		//found a letter	
@@ -233,8 +223,8 @@ unsigned int funWithCallLetter(const string & inputText, string & outputText, in
 					break;			
 				default:
 					break;
-				}
-			}
+				}//end switch statement
+			}//end found letter if statement
 		//found a symbol	
 		else{
 			if (!currentWord.empty()) {
